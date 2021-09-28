@@ -10,6 +10,9 @@ import styles from '../styles/Home.module.css'
 
 export default function Home() {
 
+  const [cliente, setCliente] = useState<Cliente>(Cliente.vazio());
+  const [visivel, setVisivel] = useState<'tabela' | 'form'>('tabela');
+
   const clientes = [
     new Cliente('Ana', 34, '1'),
     new Cliente('João', 45, '2'),
@@ -25,7 +28,9 @@ export default function Home() {
 
   }
 
-  const [visivel, setVisivel] = useState<'tabela' | 'form'>('tabela');
+  function salvarCliente(cliente:Cliente) {
+    setVisivel('tabela');
+  }
 
 
   return (
@@ -53,6 +58,7 @@ export default function Home() {
         ) : (
           <Formulario
             cliente={clientes[0]}
+            clienteMudou = {salvarCliente}
             cancelado={() => setVisivel('tabela')} />
         )}
       </Layout>
