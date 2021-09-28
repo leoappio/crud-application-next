@@ -1,9 +1,10 @@
+import firebase from '../config';
 import Cliente from "../../core/cliente";
 import ClienteRepositorio from "../../core/ClienteRepositorio";
 
 export default class ColecaoCliente implements ClienteRepositorio{
 
-    conversor = {
+   #conversor = {
         toFirestore(cliente : Cliente){
             return{
                 nome: cliente.nome,
@@ -28,6 +29,11 @@ export default class ColecaoCliente implements ClienteRepositorio{
 
     async obterTodos(): Promise <Cliente[]>{
         return null
+
+    }
+
+    private colecao(){
+        return firebase.firestore().collection('clientes').withConverter(this.#conversor)
 
     }
 }
