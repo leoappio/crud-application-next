@@ -21,6 +21,8 @@ export default function Home() {
   ]
 
   function clienteSelecionado(cliente: Cliente) {
+    setCliente(cliente)
+    setVisivel('form')
 
   }
 
@@ -30,6 +32,11 @@ export default function Home() {
 
   function salvarCliente(cliente:Cliente) {
     setVisivel('tabela');
+  }
+
+  function novoCliente() {
+    setCliente(Cliente.vazio());
+    setVisivel('form');
   }
 
 
@@ -45,7 +52,7 @@ export default function Home() {
             <div className="flex justify-end">
               <Botao
                 className="mb-5"
-                onClick={() => setVisivel('form')}
+                onClick={novoCliente}
               >
                 Novo Cliente
               </Botao>
@@ -57,7 +64,7 @@ export default function Home() {
           </>
         ) : (
           <Formulario
-            cliente={clientes[0]}
+            cliente={cliente}
             clienteMudou = {salvarCliente}
             cancelado={() => setVisivel('tabela')} />
         )}
