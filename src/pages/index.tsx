@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import { useState } from 'react'
 import Botao from '../components/Botao'
+import Formulario from '../components/Formulario'
 import Layout from '../components/layout'
 import Tabela from '../components/Tabela'
 import Cliente from '../core/cliente'
@@ -23,6 +25,8 @@ export default function Home() {
 
   }
 
+  const [visivel, setVisivel] = useState<'tabela' | 'form'>('tabela');
+
 
   return (
     <div className={`
@@ -31,16 +35,26 @@ export default function Home() {
       text-white
     `}>
       <Layout titulo="Cadastro">
-        <div className = "flex justify-end">
-          <Botao className="mb-5">
-            Novo Cliente
-          </Botao>
-        </div>
-        <Tabela clientes={clientes}
-          clienteSelecionado={clienteSelecionado}
-          clienteExcluido={clienteExcluido} >
-
-        </Tabela>
+        {visivel === 'tabela' ? (
+          <>
+            <div className="flex justify-end">
+              <Botao
+                className="mb-5"
+                onClick={() => setVisivel('form')}
+              >
+                Novo Cliente
+              </Botao>
+            </div>
+            <Tabela clientes={clientes}
+              clienteSelecionado={clienteSelecionado}
+              clienteExcluido={clienteExcluido} >
+            </Tabela>
+          </>
+        ) : (
+          <Formulario
+            cliente={clientes[0]}
+            cancelado={() => setVisivel('tabela')} />
+        )}
       </Layout>
     </div>
   )

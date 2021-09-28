@@ -1,9 +1,11 @@
 import { useState } from "react";
 import Cliente from "../core/cliente";
+import Botao from "./Botao";
 import Entrada from "./Entrada";
 
 interface FormularioProps {
     cliente: Cliente
+    cancelado? : () => void
 }
 
 export default function Formulario(props: FormularioProps) {
@@ -23,12 +25,23 @@ export default function Formulario(props: FormularioProps) {
             <Entrada
                 texto="Nome"
                 valor={nome}
+                valorMudou={setNome}
             />
             <Entrada
                 texto="Idade"
                 tipo="number"
                 valor={idade}
+                valorMudou={setIdade}
             />
+            <div className="flex justify-end mt-3">
+                <Botao className="mr-2">
+                    {id ? 'Alterar' : 'Salvar'}
+                </Botao>
+
+                <Botao onClick = {props.cancelado}>
+                    Cancelar
+                </Botao>
+            </div>
         </div>
     )
 }
